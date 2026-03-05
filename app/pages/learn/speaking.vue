@@ -197,22 +197,35 @@
               >
                 {{ msg.text }}
 
-                <!-- Audio Player Inline (Minimal) -->
+                <!-- Audio Player Inline -->
                 <div
                   v-if="msg.role === 'ai'"
                   class="mt-4 pt-4 border-t border-slate-100 flex items-center gap-3"
                 >
                   <button
-                    class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center hover:bg-indigo-100 transition-colors"
+                    @click="speakMessage(msg.text)"
+                    class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center hover:bg-indigo-100 transition-colors group/play"
                   >
-                    <Icon name="ph:play-fill" />
+                    <Icon
+                      :name="
+                        isPlaying && currentSpeakingText === msg.text
+                          ? 'ph:speaker-high-fill'
+                          : 'ph:speaker-none-fill'
+                      "
+                    />
                   </button>
                   <div
                     class="flex-1 h-1 bg-slate-100 rounded-full overflow-hidden"
                   >
-                    <div class="h-full bg-indigo-200 w-1/3"></div>
+                    <div
+                      v-if="isPlaying && currentSpeakingText === msg.text"
+                      class="h-full bg-indigo-600 animate-progress-fast"
+                    ></div>
+                    <div v-else class="h-full bg-indigo-200 w-0"></div>
                   </div>
-                  <span class="text-[10px] font-bold text-slate-400">0:24</span>
+                  <span class="text-[10px] font-bold text-slate-400"
+                    >LISTEN</span
+                  >
                 </div>
               </div>
 
@@ -476,6 +489,55 @@ const chatArea = ref(null);
 const userInput = ref("");
 const isRecording = ref(false);
 const isAiTyping = ref(false);
+const isPlaying = ref(false);
+const currentSpeakingText = ref("");
+
+// Speech Recognition Setup
+let recognition = null;
+if (process.client && (window.SpeechRecognition || window.webkitSpeechRecognition)) {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SpeechRecognition();
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.lang = 'en-US';
+
+  recognition.onresult = (event) => {
+    let interimTranscript = '';
+    let finalTranscript = '';
+
+    for (let i = event.resultIndex; i < event.results.length; ++i) {
+      if (event.results[i].isFinal) {
+        finalTranscript += event.results[i][0].transcript;
+      } else {
+        interimTranscript += event.results[i][0].transcript;
+      }
+    }
+    userInput.value = finalTranscript || interimTranscript;
+  };
+}
+
+// Text to Speech Setup
+function speakMessage(text) {
+  if (!process.client) return;
+
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-US';
+  utterance.rate = 1.0;
+  utterance.pitch = 1.1; // Slightly more friendly pitch
+
+  utterance.onstart = () => {
+    isPlaying.value = true;
+    currentSpeakingText.value = text;
+  };
+
+  utterance.onend = () => {
+    isPlaying.value = false;
+    currentSpeakingText.value = "";
+  };
+
+  window.speechSynthesis.speak(utterance);
+}
 
 const levels = [
   {
@@ -532,7 +594,7 @@ const metrics = ref([
     bgClass: "bg-amber-500",
     colorClass: "bg-amber-50 text-amber-700 border-amber-100",
   },
-]);
+];
 
 const messages = ref([
   {
@@ -572,29 +634,44 @@ function startSession(level) {
   seconds.value = 0;
   if (timerInterval) clearInterval(timerInterval);
   timerInterval = setInterval(() => seconds.value++, 1000);
+
+  // Speak initial message
+  setTimeout(() => {
+    speakMessage(messages.value[0].text);
+  }, 1000);
 }
 
 function toggleRecording() {
-  isRecording.value = !isRecording.value;
-  if (!isRecording.value) {
-    // Simulate thinking
-    isAiTyping.value = true;
-    setTimeout(() => {
-      messages.value.push({
-        role: "user",
-        text: "Actually, I think spending time outdoors is better than staying home.",
-        score: 94,
-      });
-      isAiTyping.value = false;
-      simulateAiResponse();
-    }, 1000);
+  if (isRecording.value) {
+    // STOP RECORDING
+    isRecording.value = false;
+    if (recognition) recognition.stop();
+    if (userInput.value.trim()) {
+      sendMessage();
+    }
+  } else {
+    // START RECORDING
+    isRecording.value = true;
+    userInput.value = "";
+    if (recognition) {
+       recognition.start();
+    } else {
+       alert("Speech recognition is not supported in this browser. Please use Chrome.");
+    }
   }
 }
 
 function sendMessage() {
-  if (!userInput.value.trim()) return;
-  messages.value.push({ role: "user", text: userInput.value });
+  const text = userInput.value.trim();
+  if (!text) return;
+
+  messages.value.push({
+    role: "user",
+    text: text,
+    score: Math.floor(Math.random() * 25) + 70 // Mock score
+  });
   userInput.value = "";
+  scrollToBottom();
   simulateAiResponse();
 }
 
@@ -602,13 +679,16 @@ function simulateAiResponse() {
   isAiTyping.value = true;
   setTimeout(() => {
     isAiTyping.value = false;
+    const aiText = "I completely agree! Nature has a way of resetting our energy levels. Do you have a favorite outdoor spot in your city that you visit frequently?";
     messages.value.push({
       role: "ai",
-      text: "I completely agree! Nature has a way of resetting our energy levels. Do you have a favorite outdoor spot in your city that you visit frequently?",
+      text: aiText,
       feedback:
         "Great sentence! You can also say 'rejuvenating' instead of 'better' to describe the effect of nature.",
     });
     scrollToBottom();
+    // Auto speak AI response
+    speakMessage(aiText);
   }, 1500);
 }
 
@@ -625,6 +705,7 @@ function scrollToBottom() {
 
 onUnmounted(() => {
   if (timerInterval) clearInterval(timerInterval);
+  if (process.client) window.speechSynthesis.cancel();
 });
 </script>
 
@@ -645,5 +726,20 @@ onUnmounted(() => {
 
 .fire-glow {
   filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.4));
+}
+
+@keyframes progress-fast {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+.animate-progress-fast {
+  animation: progress-fast 3s linear infinite;
 }
 </style>
