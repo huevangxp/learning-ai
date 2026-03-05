@@ -14,4 +14,5 @@ export default defineNuxtConfig({
     host: "0.0.0.0",
     port: 1234,
   },
+  css: ["~/assets/css/main.css"],
 });
