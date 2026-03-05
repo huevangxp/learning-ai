@@ -3,7 +3,6 @@
     class="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50 via-white to-white relative overflow-hidden font-sans selection:bg-indigo-100 selection:text-indigo-900"
   >
     <!-- Auth Header (Light Theme Variant) -->
-    <AuthHeader variant="login" />
 
     <!-- Premium Background mesh -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
