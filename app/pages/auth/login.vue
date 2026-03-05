@@ -1,421 +1,264 @@
 <template>
   <div
-    class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 relative overflow-hidden"
+    class="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50 via-white to-white relative overflow-hidden font-sans selection:bg-indigo-100 selection:text-indigo-900"
   >
-    <!-- Auth Header -->
+    <!-- Auth Header (Light Theme Variant) -->
     <AuthHeader variant="login" />
 
-    <!-- Background Mesh -->
+    <!-- Premium Background mesh -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div
-        class="absolute w-[500px] h-[500px] rounded-full bg-indigo-600/20 blur-[120px] -top-40 -left-40 animate-pulse"
+        class="absolute w-[1000px] h-[1000px] rounded-full bg-indigo-500/5 blur-[120px] -top-[400px] -left-[400px] animate-pulse"
       ></div>
       <div
-        class="absolute w-[400px] h-[400px] rounded-full bg-purple-600/15 blur-[100px] -bottom-32 -right-32"
-        style="animation: float-up 8s ease-in-out infinite"
+        class="absolute w-[800px] h-[800px] rounded-full bg-purple-500/5 blur-[100px] -bottom-[300px] -right-[300px]"
+        style="animation: float-up 10s ease-in-out infinite"
       ></div>
+      <!-- Subtle Grid -->
       <div
-        class="absolute w-[300px] h-[300px] rounded-full bg-cyan-500/10 blur-[80px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-        style="animation: float-up 6s ease-in-out infinite reverse"
-      ></div>
-      <div
-        class="absolute inset-0 opacity-[0.03]"
+        class="absolute inset-0 opacity-[0.4]"
         style="
-          background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cpath d=&quot;M60 0H0v60&quot; fill=&quot;none&quot; stroke=&quot;%23fff&quot; stroke-width=&quot;0.5&quot;/%3E%3C/svg%3E');
+          background-image: radial-gradient(#6366f1 0.5px, transparent 0.5px);
+          background-size: 32px 32px;
         "
-      ></div>
-      <div
-        v-for="i in 25"
-        :key="i"
-        class="absolute rounded-full"
-        :class="
-          i % 3 === 0
-            ? 'bg-indigo-400/20'
-            : i % 3 === 1
-              ? 'bg-purple-400/15'
-              : 'bg-cyan-400/10'
-        "
-        :style="{
-          width: `${Math.random() * 4 + 1}px`,
-          height: `${Math.random() * 4 + 1}px`,
-          top: `${Math.random() * 100}%`,
-          left: `${Math.random() * 100}%`,
-          animation: `float-up ${Math.random() * 6 + 4}s ease-in-out infinite`,
-          animationDelay: `${Math.random() * 4}s`,
-        }"
       ></div>
     </div>
 
     <!-- Main Content -->
     <div
-      class="relative z-10 flex items-center justify-center min-h-screen pt-20 pb-10 px-4"
+      class="relative z-10 flex items-center justify-center min-h-screen pt-24 pb-12 px-4"
     >
-      <div class="w-full max-w-[440px]">
-        <!-- Logo + Title -->
-        <div class="text-center mb-10">
-          <div class="inline-flex items-center justify-center mb-6 relative">
-            <div
-              class="absolute inset-0 w-16 h-16 mx-auto rounded-2xl blur-xl"
-              :class="role === 'admin' ? 'bg-amber-500/30' : 'bg-indigo-500/30'"
-            ></div>
+      <div class="w-full max-w-[480px]">
+        <!-- Role Switching Context -->
+        <div class="flex flex-col items-center mb-10">
+          <div class="relative group">
+            <!-- Icon Ring -->
             <div
               :class="[
-                'relative w-16 h-16 rounded-2xl flex items-center justify-center shadow-2xl border border-white/20 transition-all duration-500',
-                role === 'admin'
-                  ? 'bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 shadow-amber-500/40'
-                  : 'bg-gradient-to-br from-indigo-500 via-purple-500 to-indigo-600 shadow-indigo-500/40',
+                'w-20 h-20 rounded-[2.5rem] flex items-center justify-center shadow-2xl border-4 border-white transition-all duration-700 transform group-hover:rotate-12',
+                role === 'admin' ? 'bg-amber-500' : 'bg-indigo-600',
               ]"
             >
               <Icon
                 :name="
                   role === 'admin' ? 'ph:shield-star-fill' : 'ph:sparkle-fill'
                 "
-                class="text-white text-3xl"
+                class="text-white text-4xl"
               />
             </div>
+            <!-- Floating particles around icon -->
+            <div
+              class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-white shadow-md flex items-center justify-center"
+            >
+              <div
+                :class="[
+                  'w-2 h-2 rounded-full animate-ping',
+                  role === 'admin' ? 'bg-amber-400' : 'bg-indigo-400',
+                ]"
+              ></div>
+            </div>
           </div>
-          <h1 class="text-3xl font-extrabold text-white tracking-tight">
-            {{ role === "admin" ? "Admin Portal" : "Welcome back" }}
+
+          <h1
+            class="text-4xl font-extrabold text-slate-900 tracking-tight mt-6 mb-2"
+          >
+            {{ role === "admin" ? "AIEnglish Admin" : "Welcome Back" }}
           </h1>
-          <p class="text-indigo-200/50 mt-2 text-sm font-medium">
+          <p class="text-slate-500 text-base font-medium">
             {{
               role === "admin"
-                ? "Sign in to manage your platform"
-                : "Sign in to continue your AI-powered journey"
+                ? "Manage your global learning platform"
+                : "Pick up exactly where you left off"
             }}
           </p>
         </div>
 
         <!-- Login Card -->
         <div
-          class="bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-8 shadow-[0_8px_60px_-15px_rgba(0,0,0,0.5)] relative overflow-hidden"
+          class="bg-white/80 backdrop-blur-xl rounded-[2.5rem] border border-slate-200 p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.06)] relative overflow-hidden group"
         >
+          <!-- Hover highlight -->
           <div
-            class="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+            class="absolute top-0 left-0 w-full h-1.5 transition-colors duration-500"
+            :class="role === 'admin' ? 'bg-amber-500' : 'bg-indigo-600'"
           ></div>
 
-          <div class="space-y-5">
-            <!-- Role Selector -->
-            <div>
-              <label
-                class="block text-[11px] font-bold text-indigo-200/60 uppercase tracking-[0.15em] mb-2.5"
-                >Sign in as</label
-              >
-              <div class="grid grid-cols-2 gap-3">
-                <button
-                  @click="role = 'user'"
-                  :class="[
-                    'p-4 rounded-2xl border transition-all text-left relative overflow-hidden group',
-                    role === 'user'
-                      ? 'border-indigo-500/50 bg-indigo-500/[0.08]'
-                      : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/15',
-                  ]"
-                >
-                  <div
-                    v-if="role === 'user'"
-                    class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-indigo-400 to-transparent"
-                  ></div>
-                  <div class="flex items-center gap-3">
-                    <div
-                      class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors"
-                      :class="
-                        role === 'user' ? 'bg-indigo-500/20' : 'bg-white/5'
-                      "
-                    >
-                      <Icon
-                        name="ph:student-fill"
-                        class="text-xl"
-                        :class="
-                          role === 'user' ? 'text-indigo-400' : 'text-white/30'
-                        "
-                      />
-                    </div>
-                    <div>
-                      <p
-                        class="text-sm font-bold"
-                        :class="
-                          role === 'user' ? 'text-indigo-300' : 'text-white/60'
-                        "
-                      >
-                        Learner
-                      </p>
-                      <p
-                        class="text-[10px]"
-                        :class="
-                          role === 'user'
-                            ? 'text-indigo-300/50'
-                            : 'text-white/20'
-                        "
-                      >
-                        Student account
-                      </p>
-                    </div>
-                  </div>
-                </button>
-                <button
-                  @click="role = 'admin'"
-                  :class="[
-                    'p-4 rounded-2xl border transition-all text-left relative overflow-hidden group',
-                    role === 'admin'
-                      ? 'border-amber-500/50 bg-amber-500/[0.08]'
-                      : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/15',
-                  ]"
-                >
-                  <div
-                    v-if="role === 'admin'"
-                    class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent"
-                  ></div>
-                  <div class="flex items-center gap-3">
-                    <div
-                      class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors"
-                      :class="
-                        role === 'admin' ? 'bg-amber-500/20' : 'bg-white/5'
-                      "
-                    >
-                      <Icon
-                        name="ph:shield-star-fill"
-                        class="text-xl"
-                        :class="
-                          role === 'admin' ? 'text-amber-400' : 'text-white/30'
-                        "
-                      />
-                    </div>
-                    <div>
-                      <p
-                        class="text-sm font-bold"
-                        :class="
-                          role === 'admin' ? 'text-amber-300' : 'text-white/60'
-                        "
-                      >
-                        Admin
-                      </p>
-                      <p
-                        class="text-[10px]"
-                        :class="
-                          role === 'admin'
-                            ? 'text-amber-300/50'
-                            : 'text-white/20'
-                        "
-                      >
-                        Management portal
-                      </p>
-                    </div>
-                  </div>
-                </button>
-              </div>
-            </div>
-
-            <!-- Email -->
-            <div>
-              <label
-                class="block text-[11px] font-bold text-indigo-200/60 uppercase tracking-[0.15em] mb-2.5"
-                >Email Address</label
-              >
-              <div class="relative group">
-                <div
-                  class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-focus-within:bg-indigo-500/20 transition-colors"
-                >
-                  <Icon
-                    name="ph:envelope"
-                    class="text-white/30 group-focus-within:text-indigo-400 transition-colors"
-                  />
-                </div>
-                <input
-                  v-model="email"
-                  type="email"
-                  :placeholder="
-                    role === 'admin' ? 'admin@aienglish.com' : 'you@example.com'
-                  "
-                  class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl py-3.5 pl-14 pr-4 text-white placeholder-white/20 focus:outline-none focus:border-indigo-500/60 focus:bg-white/[0.06] focus:shadow-[0_0_0_4px_rgba(99,102,241,0.1)] transition-all text-sm"
-                />
-              </div>
-            </div>
-
-            <!-- Password -->
-            <div>
-              <label
-                class="block text-[11px] font-bold text-indigo-200/60 uppercase tracking-[0.15em] mb-2.5"
-                >Password</label
-              >
-              <div class="relative group">
-                <div
-                  class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-focus-within:bg-indigo-500/20 transition-colors"
-                >
-                  <Icon
-                    name="ph:lock-simple"
-                    class="text-white/30 group-focus-within:text-indigo-400 transition-colors"
-                  />
-                </div>
-                <input
-                  v-model="password"
-                  :type="showPassword ? 'text' : 'password'"
-                  placeholder="Enter your password"
-                  class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl py-3.5 pl-14 pr-12 text-white placeholder-white/20 focus:outline-none focus:border-indigo-500/60 focus:bg-white/[0.06] focus:shadow-[0_0_0_4px_rgba(99,102,241,0.1)] transition-all text-sm"
-                />
-                <button
-                  @click="showPassword = !showPassword"
-                  class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center text-white/25 hover:text-white/60 hover:bg-white/5 transition-all"
-                >
-                  <Icon :name="showPassword ? 'ph:eye-slash' : 'ph:eye'" />
-                </button>
-              </div>
-            </div>
-
-            <!-- Remember + Forgot -->
-            <div class="flex items-center justify-between text-sm pt-1">
-              <label class="flex items-center gap-2.5 cursor-pointer group">
-                <div
-                  class="w-4 h-4 rounded border border-white/15 bg-white/5 group-hover:border-white/30 transition flex items-center justify-center"
-                >
-                  <input type="checkbox" class="sr-only" v-model="remember" />
-                  <Icon
-                    v-if="remember"
-                    name="ph:check-bold"
-                    class="text-indigo-400 text-[10px]"
-                  />
-                </div>
-                <span
-                  class="text-white/35 group-hover:text-white/60 transition text-xs font-medium"
-                  >Remember me</span
-                >
-              </label>
-              <a
-                href="#"
-                class="text-indigo-400/80 hover:text-indigo-300 font-medium transition text-xs"
-                >Forgot password?</a
-              >
-            </div>
-
-            <!-- Error Message -->
+          <div class="space-y-6">
+            <!-- New Modern Role Tab -->
             <div
-              v-if="loginError"
-              class="flex items-center gap-3 p-3 bg-red-500/10 border border-red-500/20 rounded-xl animate-float-up"
+              class="bg-slate-50 p-1.5 rounded-2xl flex items-center gap-1 border border-slate-100"
             >
-              <Icon
-                name="ph:warning-circle-fill"
-                class="text-red-400 text-lg shrink-0"
-              />
-              <p class="text-red-300 text-xs font-medium">{{ loginError }}</p>
+              <button
+                @click="role = 'user'"
+                :class="[
+                  'flex-1 py-3 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2',
+                  role === 'user'
+                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
+                    : 'text-slate-500 hover:text-slate-800',
+                ]"
+              >
+                <Icon name="ph:user-bold" /> Learner
+              </button>
+              <button
+                @click="role = 'admin'"
+                :class="[
+                  'flex-1 py-3 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2',
+                  role === 'admin'
+                    ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20'
+                    : 'text-slate-500 hover:text-slate-800',
+                ]"
+              >
+                <Icon name="ph:shield-plus-bold" /> Administrator
+              </button>
             </div>
 
-            <!-- Submit Button -->
+            <!-- Inputs -->
+            <div class="space-y-4">
+              <div class="space-y-1.5">
+                <label
+                  class="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1"
+                  >Identity</label
+                >
+                <div class="relative">
+                  <span
+                    class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none group-focus-within:text-indigo-500 transition-colors"
+                  >
+                    <Icon name="ph:at-bold" class="text-xl" />
+                  </span>
+                  <input
+                    v-model="email"
+                    type="email"
+                    placeholder="Email address"
+                    class="w-full bg-white border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-slate-900 placeholder:text-slate-300 focus:outline-none focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600 transition-all text-[15px] font-medium"
+                  />
+                </div>
+              </div>
+
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between ml-1">
+                  <label
+                    class="text-[11px] font-bold text-slate-400 uppercase tracking-widest"
+                    >Secret</label
+                  >
+                  <a
+                    href="#"
+                    class="text-[11px] font-bold text-indigo-600 hover:text-indigo-700 uppercase tracking-widest"
+                    >Forgot?</a
+                  >
+                </div>
+                <div class="relative">
+                  <span
+                    class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none transition-colors"
+                  >
+                    <Icon name="ph:password-bold" class="text-xl" />
+                  </span>
+                  <input
+                    v-model="password"
+                    :type="showPassword ? 'text' : 'password'"
+                    placeholder="Password"
+                    class="w-full bg-white border border-slate-200 rounded-2xl py-4 pl-12 pr-12 text-slate-900 placeholder:text-slate-300 focus:outline-none focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600 transition-all text-[15px] font-medium"
+                  />
+                  <button
+                    @click="showPassword = !showPassword"
+                    class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-600 transition-colors"
+                  >
+                    <Icon
+                      :name="showPassword ? 'ph:eye-slash' : 'ph:eye'"
+                      class="text-xl"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Error Feedback -->
+            <Transition name="fade">
+              <div
+                v-if="loginError"
+                class="flex items-center gap-3 p-4 bg-rose-50 border border-rose-100 rounded-2xl animate-float-up"
+              >
+                <Icon
+                  name="ph:warning-circle-fill"
+                  class="text-rose-500 text-xl shrink-0"
+                />
+                <p class="text-rose-800 text-sm font-bold leading-tight">
+                  {{ loginError }}
+                </p>
+              </div>
+            </Transition>
+
+            <!-- Main CTA -->
             <button
               @click="handleLogin"
               :class="[
-                'w-full py-4 rounded-xl font-bold transition-all shadow-xl hover:-translate-y-0.5 text-sm tracking-wide relative overflow-hidden group',
+                'w-full py-5 rounded-2xl font-black transition-all shadow-xl hover:-translate-y-1 text-base tracking-wide flex items-center justify-center gap-3 active:scale-95',
                 role === 'admin'
-                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-amber-500/25 hover:shadow-amber-500/40'
-                  : 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-indigo-500/25 hover:shadow-indigo-500/40',
+                  ? 'bg-slate-900 text-white hover:bg-black shadow-slate-900/10'
+                  : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-600/20',
               ]"
             >
-              <div
-                class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"
-              ></div>
-              <span class="relative flex items-center justify-center gap-2">
-                <Icon
-                  :name="role === 'admin' ? 'ph:shield-star' : 'ph:sign-in'"
-                  class="text-lg"
-                />
-                {{
-                  role === "admin"
-                    ? "Access Admin Panel"
-                    : "Sign In & Start Learning"
-                }}
-              </span>
+              {{
+                role === "admin" ? "Enter Management" : "Jump into Dashboard"
+              }}
+              <Icon
+                name="ph:arrow-right-bold"
+                class="transition-transform group-hover:translate-x-2"
+              />
             </button>
           </div>
 
-          <!-- Demo Credentials -->
-          <div
-            class="mt-6 p-4 bg-white/[0.03] border border-white/[0.06] rounded-2xl"
-          >
-            <p
-              class="text-[10px] font-bold text-white/30 uppercase tracking-[0.15em] mb-3 text-center"
-            >
-              Quick Demo Login
-            </p>
-            <div class="grid grid-cols-2 gap-2">
-              <button
-                @click="fillDemo('user')"
-                class="py-2.5 px-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold hover:bg-indigo-500/20 transition-all flex items-center justify-center gap-1.5"
-              >
-                <Icon name="ph:student" /> Demo User
-              </button>
-              <button
-                @click="fillDemo('admin')"
-                class="py-2.5 px-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold hover:bg-amber-500/20 transition-all flex items-center justify-center gap-1.5"
-              >
-                <Icon name="ph:shield-star" /> Demo Admin
-              </button>
-            </div>
-          </div>
-
-          <!-- Divider -->
-          <div class="flex items-center my-7">
-            <div
-              class="flex-1 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"
-            ></div>
+          <!-- Subtle Divider -->
+          <div class="flex items-center my-8">
+            <div class="flex-1 h-px bg-slate-100"></div>
             <span
-              class="px-4 text-[10px] text-white/25 font-semibold uppercase tracking-[0.2em]"
-              >or continue with</span
+              class="px-4 text-[11px] font-bold text-slate-300 uppercase tracking-widest"
+              >Quick Demo Access</span
             >
-            <div
-              class="flex-1 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"
-            ></div>
+            <div class="flex-1 h-px bg-slate-100"></div>
           </div>
 
-          <!-- Social Login -->
+          <!-- Shortcuts -->
           <div class="grid grid-cols-2 gap-3">
             <button
-              class="flex items-center justify-center gap-2.5 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white/60 hover:bg-white/[0.08] hover:text-white hover:border-white/15 transition-all text-sm font-medium group"
+              @click="fillDemo('user')"
+              class="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl font-bold text-xs transition-all border border-slate-100 bg-slate-50 text-slate-600 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600 group/btn"
             >
               <Icon
-                name="ph:google-logo"
-                class="text-lg group-hover:scale-110 transition-transform"
+                name="ph:sparkle"
+                class="text-lg group-hover/btn:scale-110 transition-transform"
               />
-              Google
+              Demo User
             </button>
             <button
-              class="flex items-center justify-center gap-2.5 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white/60 hover:bg-white/[0.08] hover:text-white hover:border-white/15 transition-all text-sm font-medium group"
+              @click="fillDemo('admin')"
+              class="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl font-bold text-xs transition-all border border-slate-100 bg-slate-50 text-slate-600 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 group/btn"
             >
               <Icon
-                name="ph:github-logo"
-                class="text-lg group-hover:scale-110 transition-transform"
+                name="ph:shield-star"
+                class="text-lg group-hover/btn:scale-110 transition-transform"
               />
-              GitHub
+              Demo Admin
             </button>
           </div>
-
-          <p class="text-center text-white/25 text-sm mt-7">
-            Don't have an account?
-            <NuxtLink
-              to="/auth/register"
-              class="text-indigo-400 hover:text-indigo-300 font-semibold transition ml-1"
-              >Sign up free</NuxtLink
-            >
-          </p>
         </div>
 
-        <!-- Bottom Badges -->
-        <div
-          class="mt-7 flex items-center justify-center gap-8 text-xs text-white/25"
-        >
-          <span class="flex items-center gap-2">
-            <div
-              class="w-5 h-5 rounded-md bg-emerald-500/20 flex items-center justify-center"
+        <!-- Secondary CTA -->
+        <div class="text-center mt-10">
+          <p class="text-slate-500 font-medium">
+            {{
+              role === "admin"
+                ? "Not an internal staff member?"
+                : "New to the platform?"
+            }}
+            <NuxtLink
+              to="/auth/register"
+              class="text-indigo-600 font-black hover:underline underline-offset-8 decoration-2 ml-1"
             >
-              <Icon name="ph:check-bold" class="text-emerald-400 text-[10px]" />
-            </div>
-            Free Basic access
-          </span>
-          <span class="flex items-center gap-2">
-            <div
-              class="w-5 h-5 rounded-md bg-amber-500/20 flex items-center justify-center"
-            >
-              <Icon name="ph:star-fill" class="text-amber-400 text-[10px]" />
-            </div>
-            Premium plans available
-          </span>
+              {{
+                role === "admin" ? "Switch to Learner" : "Create Free Account"
+              }}
+            </NuxtLink>
+          </p>
         </div>
       </div>
     </div>
@@ -428,11 +271,9 @@ definePageMeta({ layout: false });
 const email = ref("");
 const password = ref("");
 const showPassword = ref(false);
-const remember = ref(false);
 const role = ref("user");
 const loginError = ref("");
 
-// Demo credentials
 const demoAccounts = {
   user: { email: "user@aienglish.com", password: "user1234" },
   admin: { email: "admin@aienglish.com", password: "admin1234" },
@@ -447,14 +288,11 @@ function fillDemo(type) {
 
 function handleLogin() {
   loginError.value = "";
-
-  // Validate
   if (!email.value || !password.value) {
-    loginError.value = "Please enter both email and password.";
+    loginError.value = "Security check: Please enter both email and password.";
     return;
   }
 
-  // Check credentials
   if (role.value === "admin") {
     if (
       email.value === demoAccounts.admin.email &&
@@ -463,7 +301,7 @@ function handleLogin() {
       navigateTo("/admin");
     } else {
       loginError.value =
-        "Invalid admin credentials. Try the Demo Admin button.";
+        "Invalid administrator key. Use Demo Admin for testing.";
     }
   } else {
     if (
@@ -472,8 +310,30 @@ function handleLogin() {
     ) {
       navigateTo("/learn/dashboard");
     } else {
-      loginError.value = "Invalid credentials. Try the Demo User button.";
+      loginError.value =
+        "Invalid learner credentials. Use Demo User for testing.";
     }
   }
 }
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+@keyframes float-up {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-30px) scale(1.05);
+  }
+}
+</style>
