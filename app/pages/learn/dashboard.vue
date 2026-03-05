@@ -95,6 +95,269 @@
       </div>
     </div>
 
+    <!-- ========== LEARN WITH: TENSE, GRAMMAR, VOCABULARY ========== -->
+    <div>
+      <div class="flex items-center justify-between mb-6">
+        <h2
+          class="text-xl font-extrabold text-slate-900 flex items-center gap-2"
+        >
+          <Icon
+            name="ph:graduation-cap-fill"
+            class="text-indigo-500 text-2xl"
+          />
+          Learn English Skills
+        </h2>
+        <span
+          class="text-xs bg-indigo-50 text-indigo-600 font-bold px-3 py-1.5 rounded-full border border-indigo-100"
+          >3 Categories</span
+        >
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- TENSE Section -->
+        <div
+          class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+        >
+          <div class="h-2 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
+          <div class="p-6">
+            <div class="flex items-center gap-4 mb-5">
+              <div
+                class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center border border-blue-200 group-hover:scale-110 transition-transform duration-300"
+              >
+                <Icon name="ph:clock-countdown-fill" class="text-3xl" />
+              </div>
+              <div>
+                <h3 class="text-lg font-extrabold text-slate-900">Tenses</h3>
+                <p class="text-xs text-slate-500 font-medium">
+                  Master all 12 English tenses
+                </p>
+              </div>
+            </div>
+
+            <div class="space-y-2.5 mb-6">
+              <div
+                v-for="tense in tenseTopics"
+                :key="tense.name"
+                class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 transition-all cursor-pointer group/item"
+              >
+                <div
+                  :class="[
+                    'w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold',
+                    tense.completed
+                      ? 'bg-emerald-500 text-white'
+                      : 'bg-white border border-slate-200 text-slate-400',
+                  ]"
+                >
+                  <Icon
+                    v-if="tense.completed"
+                    name="ph:check-bold"
+                    class="text-[10px]"
+                  />
+                  <span v-else>{{ tense.id }}</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p
+                    :class="[
+                      'text-sm font-semibold',
+                      tense.completed
+                        ? 'text-slate-500 line-through'
+                        : 'text-slate-700 group-hover/item:text-blue-700',
+                    ]"
+                  >
+                    {{ tense.name }}
+                  </p>
+                </div>
+                <span
+                  v-if="tense.completed"
+                  class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full"
+                  >Done</span
+                >
+                <span
+                  v-else
+                  class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full opacity-0 group-hover/item:opacity-100 transition"
+                  >Start</span
+                >
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-400">Progress</span>
+              <span class="text-xs font-extrabold text-blue-600">4/12</span>
+            </div>
+            <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+              <div
+                class="h-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transition-all duration-1000"
+                style="width: 33%"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRAMMAR Section -->
+        <div
+          class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+        >
+          <div class="h-2 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+          <div class="p-6">
+            <div class="flex items-center gap-4 mb-5">
+              <div
+                class="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center border border-purple-200 group-hover:scale-110 transition-transform duration-300"
+              >
+                <Icon name="ph:text-aa-fill" class="text-3xl" />
+              </div>
+              <div>
+                <h3 class="text-lg font-extrabold text-slate-900">Grammar</h3>
+                <p class="text-xs text-slate-500 font-medium">
+                  Rules, structures & patterns
+                </p>
+              </div>
+            </div>
+
+            <div class="space-y-2.5 mb-6">
+              <div
+                v-for="topic in grammarTopics"
+                :key="topic.name"
+                class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 hover:bg-purple-50 hover:border-purple-100 transition-all cursor-pointer group/item"
+              >
+                <div
+                  :class="[
+                    'w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold',
+                    topic.completed
+                      ? 'bg-emerald-500 text-white'
+                      : 'bg-white border border-slate-200 text-slate-400',
+                  ]"
+                >
+                  <Icon
+                    v-if="topic.completed"
+                    name="ph:check-bold"
+                    class="text-[10px]"
+                  />
+                  <span v-else>{{ topic.id }}</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p
+                    :class="[
+                      'text-sm font-semibold',
+                      topic.completed
+                        ? 'text-slate-500 line-through'
+                        : 'text-slate-700 group-hover/item:text-purple-700',
+                    ]"
+                  >
+                    {{ topic.name }}
+                  </p>
+                </div>
+                <span
+                  v-if="topic.completed"
+                  class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full"
+                  >Done</span
+                >
+                <span
+                  v-else
+                  class="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full opacity-0 group-hover/item:opacity-100 transition"
+                  >Start</span
+                >
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-400">Progress</span>
+              <span class="text-xs font-extrabold text-purple-600">3/8</span>
+            </div>
+            <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+              <div
+                class="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-1000"
+                style="width: 37%"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VOCABULARY Section -->
+        <div
+          class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+        >
+          <div class="h-2 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+          <div class="p-6">
+            <div class="flex items-center gap-4 mb-5">
+              <div
+                class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center border border-emerald-200 group-hover:scale-110 transition-transform duration-300"
+              >
+                <Icon name="ph:book-bookmark-fill" class="text-3xl" />
+              </div>
+              <div>
+                <h3 class="text-lg font-extrabold text-slate-900">
+                  Vocabulary
+                </h3>
+                <p class="text-xs text-slate-500 font-medium">
+                  Expand your word power
+                </p>
+              </div>
+            </div>
+
+            <div class="space-y-2.5 mb-6">
+              <div
+                v-for="topic in vocabTopics"
+                :key="topic.name"
+                class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 hover:bg-emerald-50 hover:border-emerald-100 transition-all cursor-pointer group/item"
+              >
+                <div
+                  :class="[
+                    'w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold',
+                    topic.completed
+                      ? 'bg-emerald-500 text-white'
+                      : 'bg-white border border-slate-200 text-slate-400',
+                  ]"
+                >
+                  <Icon
+                    v-if="topic.completed"
+                    name="ph:check-bold"
+                    class="text-[10px]"
+                  />
+                  <span v-else>{{ topic.id }}</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p
+                    :class="[
+                      'text-sm font-semibold',
+                      topic.completed
+                        ? 'text-slate-500 line-through'
+                        : 'text-slate-700 group-hover/item:text-emerald-700',
+                    ]"
+                  >
+                    {{ topic.name }}
+                  </p>
+                  <p class="text-[10px] text-slate-400 mt-0.5">
+                    {{ topic.words }} words
+                  </p>
+                </div>
+                <span
+                  v-if="topic.completed"
+                  class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full"
+                  >Done</span
+                >
+                <span
+                  v-else
+                  class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full opacity-0 group-hover/item:opacity-100 transition"
+                  >Learn</span
+                >
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-400">Progress</span>
+              <span class="text-xs font-extrabold text-emerald-600">5/10</span>
+            </div>
+            <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+              <div
+                class="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-1000"
+                style="width: 50%"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Main Dashboard Grid -->
     <div class="grid lg:grid-cols-3 gap-8">
       <!-- Left Column: Progress Ring + Daily Path -->
@@ -160,8 +423,6 @@
             320 XP more to reach
             <strong class="text-slate-800">B2 Intermediate</strong>
           </p>
-
-          <!-- Exam Ready Glow Button -->
           <button
             v-if="progressPercent >= 90"
             @click="navigateTo('/learn/exam')"
@@ -228,7 +489,7 @@
         </div>
       </div>
 
-      <!-- Center Column: Skill Radar + Recommended -->
+      <!-- Center Column: Skill Radar + Weekly -->
       <div class="space-y-6">
         <!-- Skill Radar Chart (Pentagon) -->
         <div class="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm">
@@ -239,7 +500,6 @@
           </h3>
           <div class="flex justify-center">
             <svg viewBox="0 0 300 300" class="w-full max-w-[280px]">
-              <!-- Pentagon Grid Lines -->
               <polygon
                 v-for="level in [1, 0.75, 0.5, 0.25]"
                 :key="level"
@@ -248,7 +508,6 @@
                 stroke="#e2e8f0"
                 stroke-width="1"
               />
-              <!-- Axes -->
               <line
                 v-for="(_, i) in skills"
                 :key="'axis-' + i"
@@ -259,14 +518,12 @@
                 stroke="#e2e8f0"
                 stroke-width="1"
               />
-              <!-- Filled Area -->
               <polygon
                 :points="radarDataPoints"
                 fill="rgba(99,102,241,0.15)"
                 stroke="#6366f1"
                 stroke-width="2.5"
               />
-              <!-- Data Points -->
               <circle
                 v-for="(skill, i) in skills"
                 :key="'pt-' + i"
@@ -281,7 +538,6 @@
                 stroke="white"
                 stroke-width="2"
               />
-              <!-- Labels -->
               <text
                 v-for="(skill, i) in skills"
                 :key="'lbl-' + i"
@@ -440,6 +696,42 @@ definePageMeta({ layout: "learn" });
 
 const progressPercent = ref(68);
 const circumference = 2 * Math.PI * 85;
+
+// ===== TENSE TOPICS =====
+const tenseTopics = ref([
+  { id: 1, name: "Present Simple", completed: true },
+  { id: 2, name: "Present Continuous", completed: true },
+  { id: 3, name: "Past Simple", completed: true },
+  { id: 4, name: "Past Continuous", completed: true },
+  { id: 5, name: "Present Perfect", completed: false },
+  { id: 6, name: "Past Perfect", completed: false },
+  { id: 7, name: "Future Simple (will)", completed: false },
+  { id: 8, name: "Future Continuous", completed: false },
+]);
+
+// ===== GRAMMAR TOPICS =====
+const grammarTopics = ref([
+  { id: 1, name: "Articles (a, an, the)", completed: true },
+  { id: 2, name: "Prepositions of Place", completed: true },
+  { id: 3, name: "Modal Verbs", completed: true },
+  { id: 4, name: "Conditionals (if clauses)", completed: false },
+  { id: 5, name: "Passive Voice", completed: false },
+  { id: 6, name: "Reported Speech", completed: false },
+  { id: 7, name: "Relative Clauses", completed: false },
+  { id: 8, name: "Subject-Verb Agreement", completed: false },
+]);
+
+// ===== VOCABULARY TOPICS =====
+const vocabTopics = ref([
+  { id: 1, name: "Daily Life & Routines", words: 40, completed: true },
+  { id: 2, name: "Food & Restaurants", words: 35, completed: true },
+  { id: 3, name: "Travel & Transportation", words: 45, completed: true },
+  { id: 4, name: "Health & Body", words: 30, completed: true },
+  { id: 5, name: "Work & Office", words: 50, completed: true },
+  { id: 6, name: "Technology & Internet", words: 38, completed: false },
+  { id: 7, name: "Environment & Nature", words: 42, completed: false },
+  { id: 8, name: "Emotions & Feelings", words: 28, completed: false },
+]);
 
 const dailyTasks = ref([
   {
