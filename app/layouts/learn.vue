@@ -2,23 +2,23 @@
   <div
     class="min-h-screen bg-[#f8fafc] flex font-sans text-slate-900 overflow-hidden relative"
   >
-    <!-- Background Meshes for Premium Feel -->
+    <!-- Background Meshes -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div
-        class="absolute w-[800px] h-[800px] rounded-full bg-indigo-500/5 blur-[120px] -top-[300px] -left-[300px] animate-pulse"
+        class="absolute w-[800px] h-[800px] rounded-full bg-indigo-500/5 blur-[120px] -top-[300px] -left-[100px] animate-pulse"
       ></div>
       <div
-        class="absolute w-[600px] h-[600px] rounded-full bg-purple-500/5 blur-[100px] -bottom-[200px] -right-[200px] animate-pulse"
+        class="absolute w-[600px] h-[600px] rounded-full bg-purple-500/5 blur-[100px] bottom-0 right-0 animate-pulse"
         style="animation-delay: 2s"
       ></div>
     </div>
 
-    <!-- Learning Sidebar (Modern Floating Card Style) -->
+    <!-- Connected Learning Sidebar -->
     <aside
-      class="w-80 h-[calc(100vh-2rem)] m-4 flex flex-col bg-white/70 backdrop-blur-2xl border border-slate-200/50 rounded-[2.5rem] shadow-[0_24px_48px_-12px_rgba(0,0,0,0.04)] sticky top-4 z-40 transition-all duration-500"
+      class="w-80 h-screen flex flex-col bg-white/80 backdrop-blur-3xl border-r border-slate-200/60 shadow-[4px_0_24px_rgba(0,0,0,0.02)] sticky top-0 z-40 transition-all duration-500"
     >
       <!-- Logo Section -->
-      <div class="h-20 flex items-center px-10 border-b border-slate-100/50">
+      <div class="h-20 flex items-center px-10 border-b border-slate-200/60">
         <NuxtLink
           to="/"
           class="flex items-center gap-3 active:scale-95 transition-transform group"
@@ -35,53 +35,38 @@
         </NuxtLink>
       </div>
 
-      <!-- User Level Badge (Premium Card) -->
-      <div class="px-6 py-6 border-b border-slate-100/50">
+      <!-- User level integrated progress -->
+      <div class="px-6 py-8">
         <div
-          class="p-5 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-3xl shadow-xl shadow-indigo-600/20 relative overflow-hidden group"
+          class="p-6 bg-gradient-to-br from-indigo-600/5 to-purple-600/5 rounded-[2rem] border border-indigo-100/50 relative overflow-hidden group"
         >
-          <!-- Particle Effect -->
-          <div class="absolute inset-0 opacity-20 pointer-events-none">
-            <div
-              class="absolute top-1 right-2 w-12 h-12 bg-white rounded-full blur-2xl animate-pulse"
-            ></div>
-            <div
-              class="absolute bottom-1 left-2 w-8 h-8 bg-purple-400 rounded-full blur-xl animate-pulse"
-              style="animation-delay: 1s"
-            ></div>
-          </div>
-
           <div class="relative z-10">
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-4 mb-5">
               <div
-                class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md border border-white/20 text-white flex items-center justify-center font-black text-lg shadow-inner ring-4 ring-white/10"
+                class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center font-black text-lg shadow-lg shadow-indigo-600/20"
               >
                 B1
               </div>
-              <div class="min-w-0 flex-1">
+              <div>
                 <p
-                  class="text-xs font-bold text-white/70 uppercase tracking-widest leading-none mb-1"
+                  class="text-[10px] font-black text-indigo-500 uppercase tracking-widest leading-none mb-1"
                 >
-                  Current Level
+                  Current Status
                 </p>
-                <p class="text-base font-black text-white truncate">
-                  Intermediate
-                </p>
+                <p class="text-base font-black text-slate-900">Intermediate</p>
               </div>
             </div>
 
-            <div class="mt-5 relative">
+            <div class="space-y-2">
               <div
-                class="flex items-center justify-between text-[11px] font-bold text-white/80 mb-2 px-0.5"
+                class="flex items-center justify-between text-[11px] font-bold text-slate-500"
               >
-                <span>{{ progressPercent }}% Complete</span>
-                <span>B2 NEXT</span>
+                <span>{{ progressPercent }}% Mastery</span>
+                <span class="text-indigo-600">680/1000 XP</span>
               </div>
-              <div
-                class="h-2.5 bg-white/20 rounded-full overflow-hidden border border-white/10 shadow-inner"
-              >
+              <div class="h-2 bg-slate-200 rounded-full overflow-hidden">
                 <div
-                  class="h-full bg-gradient-to-r from-white via-white to-indigo-100 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.4)] transition-all duration-1000"
+                  class="h-full bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full transition-all duration-1000"
                   :style="{ width: progressPercent + '%' }"
                 ></div>
               </div>
@@ -91,52 +76,51 @@
       </div>
 
       <!-- Navigation System -->
-      <nav class="flex-1 p-6 space-y-2 overflow-y-auto custom-scrollbar">
+      <nav class="flex-1 px-4 space-y-1.5 overflow-y-auto custom-scrollbar">
         <NuxtLink
           v-for="item in navItems"
           :key="item.to"
           :to="item.to"
-          class="flex items-center gap-4 px-5 py-4 rounded-2xl text-sm font-bold text-slate-500 hover:text-slate-900 group relative transition-all active:scale-[0.98]"
-          active-class="!bg-white !text-indigo-600 shadow-xl shadow-indigo-600/5 ring-1 ring-slate-100/50"
+          class="flex items-center gap-4 px-6 py-4 rounded-2xl text-sm font-bold text-slate-500 hover:text-indigo-600 group relative transition-all active:scale-[0.98]"
+          active-class="!bg-indigo-50 !text-indigo-700"
         >
           <div
             :class="[
-              'w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300',
+              'w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300',
               activeTo === item.to
-                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
-                : 'bg-slate-100 text-slate-500 group-hover:bg-indigo-100 group-hover:text-indigo-600',
+                ? 'bg-white text-indigo-600 shadow-sm'
+                : 'bg-transparent text-slate-400 group-hover:text-indigo-600',
             ]"
           >
-            <Icon :name="item.icon" class="text-xl" />
+            <Icon :name="item.icon" class="text-2xl" />
           </div>
           <span class="flex-1">{{ item.label }}</span>
-          <Icon
+          <div
             v-if="activeTo === item.to"
-            name="ph:caret-right-bold"
-            class="text-xs opacity-50"
-          />
+            class="absolute left-0 w-1.5 h-6 bg-indigo-600 rounded-r-full shadow-[0_0_12px_rgba(79,70,229,0.4)]"
+          ></div>
           <span
             v-if="item.badge"
-            class="w-1.5 h-1.5 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.6)]"
+            class="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.4)]"
           ></span>
         </NuxtLink>
 
-        <!-- Quick Access Section -->
-        <div class="pt-8 pb-2">
+        <!-- Hub Divider -->
+        <div class="pt-8 pb-4">
           <p
-            class="px-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4"
+            class="px-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4"
           >
-            Content Hub
+            Content Library
           </p>
           <div class="space-y-1">
             <NuxtLink
               v-for="link in secondaryLinks"
               :key="link.to"
               :to="link.to"
-              class="flex items-center gap-4 px-5 py-3 rounded-2xl text-sm font-bold text-slate-400 hover:text-indigo-600 hover:bg-slate-50 transition-all active:scale-[0.98]"
+              class="flex items-center gap-4 px-6 py-3 rounded-2xl text-sm font-bold text-slate-400 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all active:scale-[0.98]"
             >
               <div
-                class="w-2 h-2 rounded-full border-2 border-slate-300 hover:border-indigo-400 transition-colors"
+                class="w-2 h-2 rounded-full border-2 border-slate-300 group-hover:border-indigo-400 transition-colors"
               ></div>
               <span>{{ link.label }}</span>
             </NuxtLink>
@@ -144,13 +128,11 @@
         </div>
       </nav>
 
-      <!-- Profile Section -->
-      <div class="p-6">
-        <div
-          class="p-4 bg-slate-50/50 border border-slate-100/50 rounded-3xl flex items-center gap-3 group/profile"
-        >
+      <!-- Account Integration -->
+      <div class="p-6 border-t border-slate-200/60 bg-slate-50/30">
+        <div class="flex items-center gap-3 p-2 group/profile cursor-pointer">
           <div
-            class="w-10 h-10 rounded-2xl bg-gradient-to-br from-slate-800 to-black text-white flex items-center justify-center text-xs font-black shadow-lg shadow-black/10 group-hover/profile:scale-105 transition-transform"
+            class="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-xs font-black shadow-lg shadow-black/5 group-hover/profile:rotate-3 transition-transform"
           >
             JD
           </div>
@@ -161,74 +143,63 @@
               John Doe
             </p>
             <p
-              class="text-[10px] font-bold text-slate-500 uppercase tracking-wider"
+              class="text-[10px] font-bold text-slate-500 uppercase tracking-widest"
             >
-              Premium Access
+              Free Explorer
             </p>
           </div>
           <button
-            class="w-8 h-8 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-rose-500 hover:border-rose-100 shadow-sm transition-all flex items-center justify-center group/logout"
+            class="p-2 text-slate-400 hover:text-rose-500 transition-colors"
           >
-            <Icon
-              name="ph:sign-out-bold"
-              class="text-lg group-hover/logout:rotate-12 transition-transform"
-            />
+            <Icon name="ph:sign-out-bold" class="text-xl" />
           </button>
         </div>
       </div>
     </aside>
 
-    <!-- Main Content Area -->
-    <div
-      class="flex-1 flex flex-col min-h-screen relative overflow-y-auto custom-scrollbar"
-    >
-      <!-- Modern Glass Header -->
+    <!-- Content Area -->
+    <div class="flex-1 flex flex-col h-screen overflow-hidden">
+      <!-- Connected Glass Header -->
       <header
-        class="h-20 bg-white/70 backdrop-blur-2xl border-b border-slate-200/50 flex items-center justify-between px-10 sticky top-0 z-30 shadow-[0_8px_32px_-16px_rgba(0,0,0,0.04)]"
+        class="h-20 bg-white/70 backdrop-blur-2xl border-b border-slate-200/60 flex items-center justify-between px-10 sticky top-0 z-30 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
       >
         <div class="flex items-center gap-6">
           <div class="flex flex-col">
             <h1
               class="text-xl font-black text-slate-900 tracking-tight leading-tight"
             >
-              Learning Center
+              Dashboard Overview
             </h1>
             <p
-              class="text-[11px] font-bold text-slate-400 uppercase tracking-widest"
+              class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]"
             >
               {{ $route.path.split("/").pop() }} Space
             </p>
           </div>
         </div>
 
-        <div class="flex items-center gap-6">
-          <!-- Advanced Streak Widget -->
+        <div class="flex items-center gap-5">
+          <!-- Premium Streak Integration -->
           <div
-            class="flex items-center gap-3 px-5 py-2.5 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/50 rounded-2xl shadow-sm hover:shadow-md transition-shadow cursor-default"
+            class="flex items-center gap-3 px-5 py-2.5 bg-amber-500/10 border border-amber-200/50 rounded-2xl group cursor-default"
           >
-            <div class="relative">
-              <Icon
-                name="ph:flame-fill"
-                class="text-orange-500 text-xl fire-glow"
-              />
-              <div
-                class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-orange-400 animate-ping"
-              ></div>
-            </div>
+            <Icon
+              name="ph:flame-fill"
+              class="text-orange-500 text-xl fire-glow"
+            />
             <div class="flex flex-col">
               <span class="text-xs font-black text-amber-900 tracking-tight"
                 >12 DAY STREAK</span
               >
-              <span
-                class="text-[9px] font-bold text-orange-600/70 uppercase tracking-tighter"
-                >Gold Tier Status</span
+              <span class="text-[9px] font-bold text-orange-600/70 uppercase"
+                >Master Rank</span
               >
             </div>
           </div>
 
-          <!-- Notification Hub -->
+          <!-- Modern Notifications -->
           <button
-            class="relative w-12 h-12 flex items-center justify-center rounded-2xl bg-white border border-slate-200 shadow-sm text-slate-500 hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-100 transition-all active:scale-[0.92]"
+            class="relative w-12 h-12 flex items-center justify-center rounded-2xl bg-white border border-slate-200 shadow-sm text-slate-500 hover:text-indigo-600 hover:border-indigo-200 transition-all active:scale-[0.92]"
           >
             <Icon name="ph:bell-bold" class="text-xl" />
             <span
@@ -237,18 +208,20 @@
             >
           </button>
 
-          <!-- Quick Action Circle -->
-          <button
-            class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-xl shadow-slate-900/20 hover:bg-black transition-colors active:scale-95"
+          <!-- Profile Quick Action -->
+          <div
+            class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-lg shadow-indigo-600/20 cursor-pointer hover:bg-indigo-700 transition-colors"
           >
-            <Icon name="ph:plus-bold" class="text-xl" />
-          </button>
+            <Icon name="ph:user-bold" class="text-xl" />
+          </div>
         </div>
       </header>
 
-      <!-- Content Container -->
-      <main class="flex-1 p-10 max-w-[1600px] mx-auto w-full">
-        <slot />
+      <!-- Main Viewport -->
+      <main class="flex-1 overflow-y-auto custom-scrollbar p-10">
+        <div class="max-w-[1400px] mx-auto">
+          <slot />
+        </div>
       </main>
     </div>
   </div>
@@ -261,15 +234,15 @@ const progressPercent = ref(68);
 const activeTo = computed(() => route.path);
 
 const navItems = [
-  { to: "/learn/dashboard", label: "Dashboard", icon: "ph:squares-four-fill" },
-  { to: "/learn/speaking", label: "Speaking Lab", icon: "ph:microphone-fill" },
+  { to: "/learn/dashboard", label: "Dashboard", icon: "ph:squares-four-bold" },
+  { to: "/learn/speaking", label: "Speaking Lab", icon: "ph:microphone-bold" },
   {
     to: "/learn/reading",
     label: "Core Literacy",
-    icon: "ph:book-open-text-fill",
+    icon: "ph:book-open-text-bold",
     badge: true,
   },
-  { to: "/learn/exam", label: "Assessment", icon: "ph:exam-fill" },
+  { to: "/learn/exam", label: "Assessment", icon: "ph:exam-bold" },
 ];
 
 const secondaryLinks = [
