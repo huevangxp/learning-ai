@@ -7,7 +7,6 @@
 
     <!-- Background Mesh -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <!-- Gradient Orbs -->
       <div
         class="absolute w-[500px] h-[500px] rounded-full bg-indigo-600/20 blur-[120px] -top-40 -left-40 animate-pulse"
       ></div>
@@ -19,14 +18,12 @@
         class="absolute w-[300px] h-[300px] rounded-full bg-cyan-500/10 blur-[80px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         style="animation: float-up 6s ease-in-out infinite reverse"
       ></div>
-      <!-- Grid Pattern -->
       <div
         class="absolute inset-0 opacity-[0.03]"
         style="
           background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cpath d=&quot;M60 0H0v60&quot; fill=&quot;none&quot; stroke=&quot;%23fff&quot; stroke-width=&quot;0.5&quot;/%3E%3C/svg%3E');
         "
       ></div>
-      <!-- Floating Particles -->
       <div
         v-for="i in 25"
         :key="i"
@@ -58,19 +55,34 @@
         <div class="text-center mb-10">
           <div class="inline-flex items-center justify-center mb-6 relative">
             <div
-              class="absolute inset-0 w-16 h-16 mx-auto rounded-2xl bg-indigo-500/30 blur-xl"
+              class="absolute inset-0 w-16 h-16 mx-auto rounded-2xl blur-xl"
+              :class="role === 'admin' ? 'bg-amber-500/30' : 'bg-indigo-500/30'"
             ></div>
             <div
-              class="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-indigo-600 flex items-center justify-center shadow-2xl shadow-indigo-500/40 border border-white/20"
+              :class="[
+                'relative w-16 h-16 rounded-2xl flex items-center justify-center shadow-2xl border border-white/20 transition-all duration-500',
+                role === 'admin'
+                  ? 'bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 shadow-amber-500/40'
+                  : 'bg-gradient-to-br from-indigo-500 via-purple-500 to-indigo-600 shadow-indigo-500/40',
+              ]"
             >
-              <Icon name="ph:sparkle-fill" class="text-white text-3xl" />
+              <Icon
+                :name="
+                  role === 'admin' ? 'ph:shield-star-fill' : 'ph:sparkle-fill'
+                "
+                class="text-white text-3xl"
+              />
             </div>
           </div>
           <h1 class="text-3xl font-extrabold text-white tracking-tight">
-            Welcome back
+            {{ role === "admin" ? "Admin Portal" : "Welcome back" }}
           </h1>
           <p class="text-indigo-200/50 mt-2 text-sm font-medium">
-            Sign in to continue your AI-powered journey
+            {{
+              role === "admin"
+                ? "Sign in to manage your platform"
+                : "Sign in to continue your AI-powered journey"
+            }}
           </p>
         </div>
 
@@ -78,12 +90,121 @@
         <div
           class="bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-8 shadow-[0_8px_60px_-15px_rgba(0,0,0,0.5)] relative overflow-hidden"
         >
-          <!-- Subtle top highlight line -->
           <div
             class="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
           ></div>
 
           <div class="space-y-5">
+            <!-- Role Selector -->
+            <div>
+              <label
+                class="block text-[11px] font-bold text-indigo-200/60 uppercase tracking-[0.15em] mb-2.5"
+                >Sign in as</label
+              >
+              <div class="grid grid-cols-2 gap-3">
+                <button
+                  @click="role = 'user'"
+                  :class="[
+                    'p-4 rounded-2xl border transition-all text-left relative overflow-hidden group',
+                    role === 'user'
+                      ? 'border-indigo-500/50 bg-indigo-500/[0.08]'
+                      : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/15',
+                  ]"
+                >
+                  <div
+                    v-if="role === 'user'"
+                    class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-indigo-400 to-transparent"
+                  ></div>
+                  <div class="flex items-center gap-3">
+                    <div
+                      class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors"
+                      :class="
+                        role === 'user' ? 'bg-indigo-500/20' : 'bg-white/5'
+                      "
+                    >
+                      <Icon
+                        name="ph:student-fill"
+                        class="text-xl"
+                        :class="
+                          role === 'user' ? 'text-indigo-400' : 'text-white/30'
+                        "
+                      />
+                    </div>
+                    <div>
+                      <p
+                        class="text-sm font-bold"
+                        :class="
+                          role === 'user' ? 'text-indigo-300' : 'text-white/60'
+                        "
+                      >
+                        Learner
+                      </p>
+                      <p
+                        class="text-[10px]"
+                        :class="
+                          role === 'user'
+                            ? 'text-indigo-300/50'
+                            : 'text-white/20'
+                        "
+                      >
+                        Student account
+                      </p>
+                    </div>
+                  </div>
+                </button>
+                <button
+                  @click="role = 'admin'"
+                  :class="[
+                    'p-4 rounded-2xl border transition-all text-left relative overflow-hidden group',
+                    role === 'admin'
+                      ? 'border-amber-500/50 bg-amber-500/[0.08]'
+                      : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/15',
+                  ]"
+                >
+                  <div
+                    v-if="role === 'admin'"
+                    class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent"
+                  ></div>
+                  <div class="flex items-center gap-3">
+                    <div
+                      class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors"
+                      :class="
+                        role === 'admin' ? 'bg-amber-500/20' : 'bg-white/5'
+                      "
+                    >
+                      <Icon
+                        name="ph:shield-star-fill"
+                        class="text-xl"
+                        :class="
+                          role === 'admin' ? 'text-amber-400' : 'text-white/30'
+                        "
+                      />
+                    </div>
+                    <div>
+                      <p
+                        class="text-sm font-bold"
+                        :class="
+                          role === 'admin' ? 'text-amber-300' : 'text-white/60'
+                        "
+                      >
+                        Admin
+                      </p>
+                      <p
+                        class="text-[10px]"
+                        :class="
+                          role === 'admin'
+                            ? 'text-amber-300/50'
+                            : 'text-white/20'
+                        "
+                      >
+                        Management portal
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
             <!-- Email -->
             <div>
               <label
@@ -102,7 +223,9 @@
                 <input
                   v-model="email"
                   type="email"
-                  placeholder="you@example.com"
+                  :placeholder="
+                    role === 'admin' ? 'admin@aienglish.com' : 'you@example.com'
+                  "
                   class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl py-3.5 pl-14 pr-4 text-white placeholder-white/20 focus:outline-none focus:border-indigo-500/60 focus:bg-white/[0.06] focus:shadow-[0_0_0_4px_rgba(99,102,241,0.1)] transition-all text-sm"
                 />
               </div>
@@ -163,16 +286,68 @@
               >
             </div>
 
+            <!-- Error Message -->
+            <div
+              v-if="loginError"
+              class="flex items-center gap-3 p-3 bg-red-500/10 border border-red-500/20 rounded-xl animate-float-up"
+            >
+              <Icon
+                name="ph:warning-circle-fill"
+                class="text-red-400 text-lg shrink-0"
+              />
+              <p class="text-red-300 text-xs font-medium">{{ loginError }}</p>
+            </div>
+
             <!-- Submit Button -->
             <button
               @click="handleLogin"
-              class="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold hover:from-indigo-400 hover:to-purple-500 transition-all shadow-xl shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:-translate-y-0.5 text-sm tracking-wide relative overflow-hidden group"
+              :class="[
+                'w-full py-4 rounded-xl font-bold transition-all shadow-xl hover:-translate-y-0.5 text-sm tracking-wide relative overflow-hidden group',
+                role === 'admin'
+                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-amber-500/25 hover:shadow-amber-500/40'
+                  : 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-indigo-500/25 hover:shadow-indigo-500/40',
+              ]"
             >
               <div
                 class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"
               ></div>
-              <span class="relative">Sign In & Start Learning</span>
+              <span class="relative flex items-center justify-center gap-2">
+                <Icon
+                  :name="role === 'admin' ? 'ph:shield-star' : 'ph:sign-in'"
+                  class="text-lg"
+                />
+                {{
+                  role === "admin"
+                    ? "Access Admin Panel"
+                    : "Sign In & Start Learning"
+                }}
+              </span>
             </button>
+          </div>
+
+          <!-- Demo Credentials -->
+          <div
+            class="mt-6 p-4 bg-white/[0.03] border border-white/[0.06] rounded-2xl"
+          >
+            <p
+              class="text-[10px] font-bold text-white/30 uppercase tracking-[0.15em] mb-3 text-center"
+            >
+              Quick Demo Login
+            </p>
+            <div class="grid grid-cols-2 gap-2">
+              <button
+                @click="fillDemo('user')"
+                class="py-2.5 px-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold hover:bg-indigo-500/20 transition-all flex items-center justify-center gap-1.5"
+              >
+                <Icon name="ph:student" /> Demo User
+              </button>
+              <button
+                @click="fillDemo('admin')"
+                class="py-2.5 px-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold hover:bg-amber-500/20 transition-all flex items-center justify-center gap-1.5"
+              >
+                <Icon name="ph:shield-star" /> Demo Admin
+              </button>
+            </div>
           </div>
 
           <!-- Divider -->
@@ -254,8 +429,51 @@ const email = ref("");
 const password = ref("");
 const showPassword = ref(false);
 const remember = ref(false);
+const role = ref("user");
+const loginError = ref("");
 
-const handleLogin = () => {
-  navigateTo("/learn/dashboard");
+// Demo credentials
+const demoAccounts = {
+  user: { email: "user@aienglish.com", password: "user1234" },
+  admin: { email: "admin@aienglish.com", password: "admin1234" },
 };
+
+function fillDemo(type) {
+  role.value = type;
+  email.value = demoAccounts[type].email;
+  password.value = demoAccounts[type].password;
+  loginError.value = "";
+}
+
+function handleLogin() {
+  loginError.value = "";
+
+  // Validate
+  if (!email.value || !password.value) {
+    loginError.value = "Please enter both email and password.";
+    return;
+  }
+
+  // Check credentials
+  if (role.value === "admin") {
+    if (
+      email.value === demoAccounts.admin.email &&
+      password.value === demoAccounts.admin.password
+    ) {
+      navigateTo("/admin");
+    } else {
+      loginError.value =
+        "Invalid admin credentials. Try the Demo Admin button.";
+    }
+  } else {
+    if (
+      email.value === demoAccounts.user.email &&
+      password.value === demoAccounts.user.password
+    ) {
+      navigateTo("/learn/dashboard");
+    } else {
+      loginError.value = "Invalid credentials. Try the Demo User button.";
+    }
+  }
+}
 </script>
