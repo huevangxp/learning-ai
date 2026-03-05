@@ -55,19 +55,36 @@
         <div class="text-center mb-10">
           <div class="inline-flex items-center justify-center mb-6 relative">
             <div
-              class="absolute inset-0 w-16 h-16 mx-auto rounded-2xl bg-purple-500/30 blur-xl"
+              class="absolute inset-0 w-16 h-16 mx-auto rounded-2xl blur-xl"
+              :class="role === 'admin' ? 'bg-amber-500/30' : 'bg-purple-500/30'"
             ></div>
             <div
-              class="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 via-indigo-500 to-purple-600 flex items-center justify-center shadow-2xl shadow-purple-500/40 border border-white/20"
+              :class="[
+                'relative w-16 h-16 rounded-2xl flex items-center justify-center shadow-2xl border border-white/20 transition-all duration-500',
+                role === 'admin'
+                  ? 'bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 shadow-amber-500/40'
+                  : 'bg-gradient-to-br from-purple-500 via-indigo-500 to-purple-600 shadow-purple-500/40',
+              ]"
             >
-              <Icon name="ph:user-plus-fill" class="text-white text-3xl" />
+              <Icon
+                :name="
+                  role === 'admin' ? 'ph:shield-star-fill' : 'ph:user-plus-fill'
+                "
+                class="text-white text-3xl"
+              />
             </div>
           </div>
           <h1 class="text-3xl font-extrabold text-white tracking-tight">
-            Create your account
+            {{
+              role === "admin" ? "Create Admin Account" : "Create your account"
+            }}
           </h1>
           <p class="text-indigo-200/50 mt-2 text-sm font-medium">
-            Join 12,000+ learners on AIEnglish
+            {{
+              role === "admin"
+                ? "Set up your admin management access"
+                : "Join 12,000+ learners on AIEnglish"
+            }}
           </p>
         </div>
 
@@ -80,6 +97,114 @@
           ></div>
 
           <div class="space-y-5">
+            <!-- Role Selector -->
+            <div>
+              <label
+                class="block text-[11px] font-bold text-indigo-200/60 uppercase tracking-[0.15em] mb-2.5"
+                >Register as</label
+              >
+              <div class="grid grid-cols-2 gap-3">
+                <button
+                  @click="role = 'user'"
+                  :class="[
+                    'p-3.5 rounded-2xl border transition-all text-left relative overflow-hidden',
+                    role === 'user'
+                      ? 'border-indigo-500/50 bg-indigo-500/[0.08]'
+                      : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/15',
+                  ]"
+                >
+                  <div
+                    v-if="role === 'user'"
+                    class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-indigo-400 to-transparent"
+                  ></div>
+                  <div class="flex items-center gap-3">
+                    <div
+                      class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 transition-colors"
+                      :class="
+                        role === 'user' ? 'bg-indigo-500/20' : 'bg-white/5'
+                      "
+                    >
+                      <Icon
+                        name="ph:student-fill"
+                        :class="
+                          role === 'user' ? 'text-indigo-400' : 'text-white/30'
+                        "
+                      />
+                    </div>
+                    <div>
+                      <p
+                        class="text-sm font-bold"
+                        :class="
+                          role === 'user' ? 'text-indigo-300' : 'text-white/60'
+                        "
+                      >
+                        Learner
+                      </p>
+                      <p
+                        class="text-[10px]"
+                        :class="
+                          role === 'user'
+                            ? 'text-indigo-300/50'
+                            : 'text-white/20'
+                        "
+                      >
+                        Student account
+                      </p>
+                    </div>
+                  </div>
+                </button>
+                <button
+                  @click="role = 'admin'"
+                  :class="[
+                    'p-3.5 rounded-2xl border transition-all text-left relative overflow-hidden',
+                    role === 'admin'
+                      ? 'border-amber-500/50 bg-amber-500/[0.08]'
+                      : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/15',
+                  ]"
+                >
+                  <div
+                    v-if="role === 'admin'"
+                    class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent"
+                  ></div>
+                  <div class="flex items-center gap-3">
+                    <div
+                      class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 transition-colors"
+                      :class="
+                        role === 'admin' ? 'bg-amber-500/20' : 'bg-white/5'
+                      "
+                    >
+                      <Icon
+                        name="ph:shield-star-fill"
+                        :class="
+                          role === 'admin' ? 'text-amber-400' : 'text-white/30'
+                        "
+                      />
+                    </div>
+                    <div>
+                      <p
+                        class="text-sm font-bold"
+                        :class="
+                          role === 'admin' ? 'text-amber-300' : 'text-white/60'
+                        "
+                      >
+                        Admin
+                      </p>
+                      <p
+                        class="text-[10px]"
+                        :class="
+                          role === 'admin'
+                            ? 'text-amber-300/50'
+                            : 'text-white/20'
+                        "
+                      >
+                        Management portal
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
             <!-- Full Name -->
             <div>
               <label
@@ -150,7 +275,6 @@
                   class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl py-3.5 pl-14 pr-4 text-white placeholder-white/20 focus:outline-none focus:border-indigo-500/60 focus:bg-white/[0.06] focus:shadow-[0_0_0_4px_rgba(99,102,241,0.1)] transition-all text-sm"
                 />
               </div>
-              <!-- Password Strength Indicator -->
               <div class="flex gap-1.5 mt-3">
                 <div
                   v-for="i in 4"
@@ -191,8 +315,8 @@
               </p>
             </div>
 
-            <!-- Plan Selection -->
-            <div>
+            <!-- Plan Selection (only for User) -->
+            <div v-if="role === 'user'">
               <label
                 class="block text-[11px] font-bold text-indigo-200/60 uppercase tracking-[0.15em] mb-3"
                 >Choose Your Plan</label
@@ -201,7 +325,7 @@
                 <button
                   @click="plan = 'free'"
                   :class="[
-                    'p-4 rounded-2xl border transition-all text-left relative overflow-hidden group',
+                    'p-4 rounded-2xl border transition-all text-left relative overflow-hidden',
                     plan === 'free'
                       ? 'border-emerald-500/50 bg-emerald-500/[0.08]'
                       : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/15',
@@ -244,7 +368,7 @@
                 <button
                   @click="plan = 'premium'"
                   :class="[
-                    'p-4 rounded-2xl border transition-all text-left relative overflow-hidden group',
+                    'p-4 rounded-2xl border transition-all text-left relative overflow-hidden',
                     plan === 'premium'
                       ? 'border-indigo-500/50 bg-indigo-500/[0.08]'
                       : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/15',
@@ -296,15 +420,55 @@
               </div>
             </div>
 
+            <!-- Admin Access Key (only for Admin) -->
+            <div v-if="role === 'admin'">
+              <label
+                class="block text-[11px] font-bold text-amber-200/60 uppercase tracking-[0.15em] mb-2.5"
+                >Admin Access Key</label
+              >
+              <div class="relative group">
+                <div
+                  class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-focus-within:bg-amber-500/20 transition-colors"
+                >
+                  <Icon
+                    name="ph:key-fill"
+                    class="text-white/30 group-focus-within:text-amber-400 transition-colors"
+                  />
+                </div>
+                <input
+                  v-model="adminKey"
+                  type="password"
+                  placeholder="Enter admin access key"
+                  class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl py-3.5 pl-14 pr-4 text-white placeholder-white/20 focus:outline-none focus:border-amber-500/60 focus:bg-white/[0.06] focus:shadow-[0_0_0_4px_rgba(245,158,11,0.1)] transition-all text-sm"
+                />
+              </div>
+              <p class="text-[10px] text-white/20 mt-1.5 font-medium">
+                Contact your organization to get the access key
+              </p>
+            </div>
+
             <!-- Submit Button -->
             <button
               @click="handleRegister"
-              class="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold hover:from-indigo-400 hover:to-purple-500 transition-all shadow-xl shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:-translate-y-0.5 text-sm tracking-wide relative overflow-hidden group"
+              :class="[
+                'w-full py-4 rounded-xl font-bold transition-all shadow-xl hover:-translate-y-0.5 text-sm tracking-wide relative overflow-hidden group',
+                role === 'admin'
+                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-amber-500/25 hover:shadow-amber-500/40'
+                  : 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-indigo-500/25 hover:shadow-indigo-500/40',
+              ]"
             >
               <div
                 class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"
               ></div>
-              <span class="relative">Create Account</span>
+              <span class="relative flex items-center justify-center gap-2">
+                <Icon
+                  :name="role === 'admin' ? 'ph:shield-star' : 'ph:user-plus'"
+                  class="text-lg"
+                />
+                {{
+                  role === "admin" ? "Create Admin Account" : "Create Account"
+                }}
+              </span>
             </button>
           </div>
 
@@ -345,8 +509,14 @@ const name = ref("");
 const email = ref("");
 const password = ref("");
 const plan = ref("free");
+const role = ref("user");
+const adminKey = ref("");
 
 const handleRegister = () => {
-  navigateTo("/learn/dashboard");
+  if (role.value === "admin") {
+    navigateTo("/admin");
+  } else {
+    navigateTo("/learn/dashboard");
+  }
 };
 </script>
