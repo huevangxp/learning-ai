@@ -34,12 +34,6 @@
         >
           Learn Hub
         </NuxtLink>
-        <NuxtLink
-          to="/learn/dashboard"
-          class="px-5 py-2 rounded-full text-sm font-medium text-white/50 hover:text-white hover:bg-white/10 transition-all duration-200"
-        >
-          Dashboard
-        </NuxtLink>
       </nav>
 
       <!-- Auth Actions -->
@@ -67,7 +61,7 @@
 defineProps({
   variant: {
     type: String,
-    default: "login", // 'login' or 'register'
+    default: "login",
   },
 });
 </script>

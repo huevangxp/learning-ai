@@ -23,17 +23,6 @@
             class="text-gray-600 hover:text-indigo-600 transition font-medium"
             >Learn Hub</NuxtLink
           >
-          <NuxtLink
-            to="/learn/dashboard"
-            class="text-gray-600 hover:text-indigo-600 transition font-medium"
-            >Dashboard</NuxtLink
-          >
-          <NuxtLink
-            to="/admin"
-            class="text-gray-600 hover:text-indigo-600 transition flex items-center gap-1 font-medium"
-          >
-            <Icon name="ph:shield-star" /> Admin
-          </NuxtLink>
         </div>
         <div class="flex flex-row items-center space-x-3">
           <NuxtLink
