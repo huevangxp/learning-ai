@@ -494,16 +494,20 @@ const currentSpeakingText = ref("");
 
 // Speech Recognition Setup
 let recognition = null;
-if (process.client && (window.SpeechRecognition || window.webkitSpeechRecognition)) {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (
+  process.client &&
+  (window.SpeechRecognition || window.webkitSpeechRecognition)
+) {
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SpeechRecognition();
   recognition.continuous = true;
   recognition.interimResults = true;
-  recognition.lang = 'en-US';
+  recognition.lang = "en-US";
 
   recognition.onresult = (event) => {
-    let interimTranscript = '';
-    let finalTranscript = '';
+    let interimTranscript = "";
+    let finalTranscript = "";
 
     for (let i = event.resultIndex; i < event.results.length; ++i) {
       if (event.results[i].isFinal) {
@@ -522,7 +526,7 @@ function speakMessage(text) {
 
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'en-US';
+  utterance.lang = "en-US";
   utterance.rate = 1.0;
   utterance.pitch = 1.1; // Slightly more friendly pitch
 
@@ -594,7 +598,7 @@ const metrics = ref([
     bgClass: "bg-amber-500",
     colorClass: "bg-amber-50 text-amber-700 border-amber-100",
   },
-];
+]);
 
 const messages = ref([
   {
@@ -654,9 +658,11 @@ function toggleRecording() {
     isRecording.value = true;
     userInput.value = "";
     if (recognition) {
-       recognition.start();
+      recognition.start();
     } else {
-       alert("Speech recognition is not supported in this browser. Please use Chrome.");
+      alert(
+        "Speech recognition is not supported in this browser. Please use Chrome.",
+      );
     }
   }
 }
@@ -668,7 +674,7 @@ function sendMessage() {
   messages.value.push({
     role: "user",
     text: text,
-    score: Math.floor(Math.random() * 25) + 70 // Mock score
+    score: Math.floor(Math.random() * 25) + 70, // Mock score
   });
   userInput.value = "";
   scrollToBottom();
@@ -679,7 +685,8 @@ function simulateAiResponse() {
   isAiTyping.value = true;
   setTimeout(() => {
     isAiTyping.value = false;
-    const aiText = "I completely agree! Nature has a way of resetting our energy levels. Do you have a favorite outdoor spot in your city that you visit frequently?";
+    const aiText =
+      "I completely agree! Nature has a way of resetting our energy levels. Do you have a favorite outdoor spot in your city that you visit frequently?";
     messages.value.push({
       role: "ai",
       text: aiText,
